@@ -262,7 +262,7 @@ function createToolCard(tool, index) {
   // Check user actions
   const userVotes = JSON.parse(localStorage.getItem('userVotes') || '{}');
   const userUpvotes = JSON.parse(localStorage.getItem('userUpvotes') || '[]');
-  const shortlists = JSON.parse(localStorage.getItem('shortlists') || '{}');
+  const shortlists = JSON.parse(localStorage.getItem('shortlists')) || {};
 
   const hasRated = userVotes[tool.id];
   const hasUpvoted = userUpvotes.includes(tool.id);
@@ -588,7 +588,7 @@ function openShortlistModal(toolId) {
   document.body.style.overflow = 'hidden';
 
   // Highlight currently active list for this tool
-  const shortlists = JSON.parse(localStorage.getItem('shortlists') || '{}');
+  const shortlists = JSON.parse(localStorage.getItem('shortlists')) || {};
   const options = document.querySelectorAll('.shortlist-option');
   options.forEach(opt => {
     const listType = opt.dataset.list;
@@ -611,11 +611,11 @@ function handleShortlistSelection(e) {
   if (!option || !activeShortlistToolId) return;
 
   const listType = option.dataset.list;
-  let shortlists = JSON.parse(localStorage.getItem('shortlists') || {
+  let shortlists = JSON.parse(localStorage.getItem('shortlists')) || {
     'try-later': [],
     'for-work': [],
     'favorites': []
-  });
+  };
 
   if (!shortlists[listType]) shortlists[listType] = [];
 
