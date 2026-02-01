@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Track and discover the latest AI tools and technologies. A modern, curated collection of AI-powered applications and services.">
+  <meta name="keywords" content="AI tools, artificial intelligence, machine learning, AI tracker, AI applications">
+  <title>AI Tools Tracker | Discover & Track the Latest AI Technologies</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-container">
+      <a href="#" class="logo">
+        <div class="logo-icon">🤖</div>
+        <span>AI Tracker</span>
+      </a>
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark mode">
+          <span id="themeIcon">🌙</span>
+        </button>
+
+        <!-- Login Button (shown when not authenticated) -->
+        <button class="login-btn" id="loginBtn" style="display: none;">
+          <span>🔐</span>
+          <span>Admin</span>
+        </button>
+
+        <!-- Admin Section (shown when authenticated) -->
+        <div class="admin-section" id="adminSection" style="display: none;">
+          <span class="admin-badge">👑 Admin</span>
+          <button class="add-tool-btn" id="addToolBtn">
+            <span>➕</span>
+            <span>Add Tool</span>
+          </button>
+          <button class="logout-btn" id="logoutBtn">
+            <span>🚪</span>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1 class="hero-title">
+        Discover the Best <span class="highlight">AI Tools</span>
+      </h1>
+      <p class="hero-subtitle">
+        Track, explore, and stay updated with the latest artificial intelligence tools and technologies
+      </p>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-filter-bar">
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search AI tools..."
+          aria-label="Search AI tools">
+      </div>
+      <div class="filter-controls">
+        <select class="filter-select" id="categoryFilter" aria-label="Filter by category">
+          <option value="all">All Categories</option>
+          <option value="writing">Writing</option>
+          <option value="design">Design</option>
+          <option value="coding">Coding</option>
+          <option value="productivity">Productivity</option>
+          <option value="image">Image Generation</option>
+          <option value="video">Video</option>
+          <option value="audio">Audio</option>
+          <option value="research">Research</option>
+        </select>
+
+        <select class="filter-select" id="sortFilter" aria-label="Sort by">
+          <option value="newest">Newest First</option>
+          <option value="upvotes">Most Upvoted</option>
+          <option value="loved">Most Loved this Week</option>
+          <option value="rising">Rising Tools</option>
+          <option value="underrated">Most Underrated</option>
+        </select>
+
+        <button class="shortlist-filter-btn" id="shortlistToggleBtn">
+          <span>🔖</span>
+          <span>My Shortlist</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tools Grid -->
+    <div class="tools-grid" id="toolsGrid">
+      <!-- Tools will be dynamically inserted here -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-state-icon">🔍</div>
+      <h2 class="empty-state-title">No tools found</h2>
+      <p class="empty-state-text">Try adjusting your search or filter criteria</p>
+    </div>
+  </main>
+
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">🔐 Admin</h2>
+        <button class="close-btn" id="closeLoginModalBtn" aria-label="Close modal">✕</button>
+      </div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="adminUsername" class="form-label">Username</label>
+          <input type="text" id="adminUsername" class="form-input" placeholder="Enter admin username" required
+            autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="adminPassword" class="form-label">Password</label>
+          <input type="password" id="adminPassword" class="form-input" placeholder="Enter admin password" required
+            autocomplete="current-password">
+        </div>
+
+        <div class="login-error" id="loginError" style="display: none;"></div>
+
+        <button type="submit" class="submit-btn">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Tool Modal -->
+  <div class="modal" id="addToolModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="addToolModalTitle">Add New AI Tool</h2>
+        <button class="close-btn" id="closeModalBtn" aria-label="Close modal">✕</button>
+      </div>
+      <form id="addToolForm">
+        <input type="hidden" id="toolEditId">
+        <div class="form-group">
+          <label for="toolName" class="form-label">Tool Name *</label>
+          <input type="text" id="toolName" class="form-input" placeholder="e.g., ChatGPT" required>
+        </div>
+
+        <div class="form-group">
+          <label for="toolCategory" class="form-label">Category *</label>
+          <select id="toolCategory" class="form-select" required>
+            <option value="">Select a category</option>
+            <option value="writing">Writing</option>
+            <option value="design">Design</option>
+            <option value="coding">Coding</option>
+            <option value="productivity">Productivity</option>
+            <option value="image">Image Generation</option>
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+            <option value="research">Research</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="toolDescription" class="form-label">Description *</label>
+          <textarea id="toolDescription" class="form-textarea" placeholder="Brief description of the tool..."
+            required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="toolUrl" class="form-label">Website URL *</label>
+          <input type="url" id="toolUrl" class="form-input" placeholder="https://example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="toolIcon" class="form-label">Icon Emoji</label>
+          <input type="text" id="toolIcon" class="form-input" placeholder="e.g., 💬" maxlength="2">
+        </div>
+
+        <button type="submit" class="submit-btn" id="addToolSubmitBtn">Add Tool</button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Shortlist Selection Modal -->
+  <div class="modal" id="shortlistModal">
+    <div class="modal-content shortlist-modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">🔖 Add to Shortlist</h2>
+        <button class="close-btn" id="closeShortlistModalBtn" aria-label="Close modal">✕</button>
+      </div>
+      <p class="modal-subtitle">Organize this tool into your collections</p>
+      <div class="shortlist-options" id="shortlistOptions">
+        <button class="shortlist-option" data-list="try-later">
+          <span class="option-icon">⏳</span>
+          <div class="option-info">
+            <span class="option-name">Try Later</span>
+            <span class="option-desc">Tools you want to explore soon</span>
+          </div>
+        </button>
+        <button class="shortlist-option" data-list="for-work">
+          <span class="option-icon">💼</span>
+          <div class="option-info">
+            <span class="option-name">For Work</span>
+            <span class="option-desc">Essential tools for professional tasks</span>
+          </div>
+        </button>
+        <button class="shortlist-option" data-list="favorites">
+          <span class="option-icon">⭐</span>
+          <div class="option-info">
+            <span class="option-name">Favorites</span>
+            <span class="option-desc">Your most loved AI applications</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
